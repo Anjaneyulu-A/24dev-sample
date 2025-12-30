@@ -1,0 +1,31 @@
+appVersion: v1.0.0
+kind: Deployment
+metadata:
+  name: my-aks-deployment
+  labels:
+    app: my-aks-app
+spec:
+  replicas: 3 
+  selector:
+    matchLabels:
+      app: my-aks-app
+  template:
+    metadata:
+      labels:
+        app: my-aks-app
+    spec:
+      containers:
+      - name: my-aks-container
+        image: myregistry.azurecr.io/my-aks-app:v1.0.0
+        ports:
+        - containerPort: 80
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+          limits:
+            memory: "512Mi"
+            cpu: "1"
